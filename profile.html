@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>My Profile — Connect-K</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <header class="topbar">
+    <a class="brand" href="dashboard.html">
+      <span class="brand-mark">K</span>
+      <span>
+        <b>CONNECT-<i>K</i></b>
+        <small>Made easy.</small>
+      </span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="dashboard.html">Home</a>
+      <a href="profile.html" class="active">My Profile</a>
+      <a href="#">Discover</a>
+      <a href="#">Communities</a>
+      <a href="#">Messages</a>
+    </nav>
+
+    <button class="btn btn-ghost" id="logout-button" type="button">
+      Log out
+    </button>
+  </header>
+
+  <main class="profile-page wrap">
+
+    <p class="eyebrow">YOUR CONNECT-K IDENTITY</p>
+    <h1>Your <em>profile.</em></h1>
+
+    <section class="profile-card">
+
+      <!-- COVER PHOTO -->
+      <div class="profile-cover" id="cover-preview">
+
+        <button
+          class="cover-upload btn btn-ghost"
+          id="cover-upload-button"
+          type="button"
+        >
+          Change cover
+        </button>
+
+        <input
+          id="cover-input"
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          hidden
+        >
+
+      </div>
+
+      <!-- PROFILE PICTURE -->
+      <div class="profile-avatar-row">
+
+        <div class="profile-avatar" id="avatar-preview">K</div>
+
+        <button
+          class="btn btn-ghost avatar-upload"
+          id="avatar-upload-button"
+          type="button"
+        >
+          Change photo
+        </button>
+
+        <input
+          id="avatar-input"
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          hidden
+        >
+
+      </div>
+
+      <div class="profile-details">
+        <h2 id="profile-display-name">Your name</h2>
+        <p id="profile-username">@username</p>
+      </div>
+
+    </section>
+
+    <!-- PROFILE EDITOR -->
+    <section class="profile-editor feature-card">
+
+      <h2>Edit your profile</h2>
+      <p class="muted">Tell people a little about yourself.</p>
+
+      <form id="profile-form">
+
+        <label for="display-name-input">Display name</label>
+        <input id="display-name-input" type="text" maxlength="60" required>
+
+        <label for="username-input">Username</label>
+        <input
+          id="username-input"
+          type="text"
+          minlength="3"
+          maxlength="24"
+          pattern="[a-zA-Z0-9_]+"
+          required
+        >
+
+        <p class="muted">
+          3–24 characters. Letters, numbers and underscores only.
+        </p>
+
+        <label for="bio-input">Bio</label>
+        <textarea id="bio-input" maxlength="240" rows="4"></textarea>
+
+        <label for="institution-input">Institution</label>
+        <input id="institution-input" type="text" maxlength="100">
+
+        <label for="interests-input">Interests</label>
+        <input
+          id="interests-input"
+          type="text"
+          placeholder="Technology, music, design"
+        >
+
+        <p
+          id="profile-message"
+          class="form-message"
+          role="status"
+          aria-live="polite"
+        ></p>
+
+        <button class="btn btn-red" type="submit" id="save-profile">
+          Save changes
+        </button>
+
+      </form>
+    </section>
+
+  </main>
+
+  <script type="module" src="js/profile.js"></script>
+
+</body>
+</html>
