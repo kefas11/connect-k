@@ -39,6 +39,7 @@
     {
       "source": "/member",
       "destination": "/member.html"
-    }
+    },
+    {"source":"/messages","destination":"/messages.html"},
   ]
 }
