@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Discover People — CONNECT-K</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <header class="topbar">
+
+    <a class="brand" href="/">
+      <span class="brand-mark">K</span>
+      <span>
+        <b>CONNECT-<i>K</i></b>
+        <small>Made easy.</small>
+      </span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="/dashboard">Home</a>
+      <a href="/profile">My Profile</a>
+      <a href="/feed">Feed</a>
+      <a class="active" href="/discover">Discover</a>
+      <a href="/communities">Communities</a>
+      <a href="/messages">Messages</a>
+    </nav>
+
+    <button class="btn btn-ghost" id="logout-button" type="button">
+      Log out
+    </button>
+
+  </header>
+
+  <main class="wrap profile-page">
+
+    <p class="eyebrow">EXPAND YOUR CIRCLE</p>
+
+    <h1>Meet your <em>kind of people.</em></h1>
+
+    <p class="muted">
+      Discover people, explore shared interests and build meaningful connections.
+    </p>
+
+    <section class="feature-card" style="padding:22px; margin-top:28px;">
+
+      <label for="discover-search">Find people</label>
+
+      <input
+        id="discover-search"
+        type="search"
+        placeholder="Search by name, username or interest..."
+      >
+
+      <p class="muted" style="margin-top:12px;">
+        Discover people beyond your existing circle.
+      </p>
+
+    </section>
+
+    <section style="margin-top:35px;">
+
+      <p class="eyebrow">YOUR NEXT CONNECTION</p>
+
+      <h2>People you may connect with</h2>
+
+      <div
+        id="discover-container"
+        style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:20px;margin-top:22px;"
+      >
+        <p class="muted">Loading people...</p>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script type="module" src="js/discover.js"></script>
+
+</body>
+</html>
