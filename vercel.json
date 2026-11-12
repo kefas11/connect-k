@@ -35,10 +35,10 @@
     {
       "source": "/connections",
       "destination": "/connections.html"
-    }
+    },
     {
-  "source": "/member",
-  "destination": "/member.html"
-}
+      "source": "/member",
+      "destination": "/member.html"
+    }
   ]
 }
