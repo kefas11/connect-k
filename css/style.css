@@ -467,3 +467,33 @@ body:has(#messages-container) {
     padding: 14px !important;
   }
 }
+/* CONNECT-K: clearer premium action buttons */
+.coming-soon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 20px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #F0C5CE, #DFA3B2) !important;
+  color: #173626 !important;
+  border: 1px solid rgba(255, 231, 236, 0.65);
+  font-weight: 700;
+  text-decoration: none;
+  opacity: 1 !important;
+  text-shadow: none !important;
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.16);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+a.coming-soon:hover {
+  background: linear-gradient(135deg, #F7D5DC, #E8B2BF) !important;
+  color: #102B20 !important;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  .coming-soon {
+    padding: 10px 17px;
+    font-size: 13px;
+  }
+}
