@@ -497,3 +497,37 @@ a.coming-soon:hover {
     font-size: 13px;
   }
 }
+/* CONNECT-K — Visible Open Chat Buttons on All Devices */
+#conversations-container button {
+  background: linear-gradient(135deg, #C02B43, #86182D) !important;
+  color: #FFF8F0 !important;
+  border: 1px solid rgba(255, 220, 225, 0.35) !important;
+  border-radius: 999px !important;
+  padding: 12px 22px !important;
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.22) !important;
+  cursor: pointer;
+}
+
+#conversations-container button:hover {
+  background: linear-gradient(135deg, #D63B55, #A91F35) !important;
+  color: #FFFFFF !important;
+  transform: translateY(-2px);
+}
+
+#conversations-container button:focus-visible {
+  outline: 3px solid #F0C5CE !important;
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  #conversations-container button {
+    padding: 11px 20px !important;
+    font-size: 13px !important;
+    min-height: 44px;
+  }
+}

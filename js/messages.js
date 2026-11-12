@@ -50,6 +50,24 @@ function renderEmpty(container, message) {
   container.replaceChildren(paragraph);
 }
 
+// Count incoming messages received after this member last read the chat.
+function getUnreadCount(conversation) {
+  const myMembership = (conversation.conversation_members || []).find(
+    member => member.user_id === currentUser.id
+  );
+
+  const lastReadAt = myMembership?.last_read_at
+    ? new Date(myMembership.last_read_at).getTime()
+    : 0;
+
+  return (conversation.messages || []).filter(message => {
+    return (
+      message.sender_id !== currentUser.id &&
+      new Date(message.created_at).getTime() > lastReadAt
+    );
+  }).length;
+}
+
 function renderConversationList(items, container, isRequest = false) {
   container.replaceChildren();
 
@@ -72,9 +90,33 @@ function renderConversationList(items, container, isRequest = false) {
       "gap:12px;flex-wrap:wrap;";
 
     const details = document.createElement("div");
+    details.style.cssText = "flex:1;min-width:150px;";
+
+    const nameRow = document.createElement("div");
+    nameRow.style.cssText =
+      "display:flex;align-items:center;gap:9px;flex-wrap:wrap;";
 
     const name = document.createElement("strong");
     name.textContent = getOtherName(conversation);
+    nameRow.append(name);
+
+    const unreadCount = isRequest ? 0 : getUnreadCount(conversation);
+
+    if (unreadCount > 0) {
+      const badge = document.createElement("span");
+      badge.textContent = unreadCount === 1
+        ? "UNREAD · 1"
+        : `UNREAD · ${unreadCount}`;
+
+      badge.style.cssText =
+        "display:inline-flex;align-items:center;" +
+        "padding:5px 10px;border-radius:999px;" +
+        "background:linear-gradient(135deg,#F0B7C5,#DF8FA5);" +
+        "color:#173626;font-size:10px;font-weight:800;" +
+        "letter-spacing:.5px;";
+
+      nameRow.append(badge);
+    }
 
     const preview = document.createElement("p");
     preview.className = "muted";
@@ -86,7 +128,7 @@ function renderConversationList(items, container, isRequest = false) {
       ? latestMessage.body.slice(0, 75)
       : "Start a conversation";
 
-    details.append(name, preview);
+    details.append(nameRow, preview);
 
     const actions = document.createElement("div");
     actions.style.cssText = "display:flex;gap:8px;flex-wrap:wrap;";
@@ -167,7 +209,8 @@ async function loadConversations() {
         created_by,
         created_at,
         conversation_members (
-          user_id
+          user_id,
+          last_read_at
         ),
         messages (
           id,
@@ -319,6 +362,29 @@ async function openConversation(conversation) {
 
   messageInput.disabled = false;
   sendButton.disabled = false;
+
+  // Mark this conversation as read for the current user.
+  const { error: readError } = await supabase.rpc(
+    "ck_mark_conversation_read",
+    { target_conversation_id: conversation.id }
+  );
+
+  if (readError) {
+    console.error("Could not mark conversation as read:", readError);
+    showStatus("Could not update read status: " + readError.message, true);
+    return;
+  }
+
+  // Update local state so the unread badge disappears immediately.
+  const myMembership = (conversation.conversation_members || []).find(
+    member => member.user_id === currentUser.id
+  );
+
+  if (myMembership) {
+    myMembership.last_read_at = new Date().toISOString();
+  }
+
+  renderConversationSections();
 
   const { data, error } = await supabase
     .from("messages")
