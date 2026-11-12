@@ -3,31 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Your space — Connect-K</title>
+  <title>Your space — CONNECT-K</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
   <header class="topbar">
-    <a class="brand" href="dashboard.html">
+
+    <a class="brand" href="/dashboard">
       <span class="brand-mark">K</span>
-      <span><b>CONNECT-<i>K</i></b><small>Made easy.</small></span>
+      <span>
+        <b>CONNECT-<i>K</i></b>
+        <small>Made easy.</small>
+      </span>
     </a>
 
-    <nav class="nav-links">
-  <a class="active" href="/dashboard">Home</a>
-  <a href="/profile">My Profile</a>
-  <a href="/feed">Feed</a>
-  <a href="/discover">Discover</a>
-  <a href="/communities">Communities</a>
-  <a href="/messages">Messages</a>
-</nav>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a class="active" href="/dashboard">Home</a>
+      <a href="/profile">My Profile</a>
+      <a href="/feed">Feed</a>
+      <a href="/discover">Discover</a>
+      <a href="/communities">Communities</a>
+      <a href="/messages">Messages</a>
+    </nav>
 
-    <button class="btn btn-ghost" id="logout-button">Log out</button>
+    <button class="btn btn-ghost" id="logout-button" type="button">
+      Log out
+    </button>
+
   </header>
 
   <main class="dashboard wrap">
+
     <p class="eyebrow">YOUR CONNECT-K SPACE</p>
 
     <h1>Welcome, <em id="display-name">friend</em>.</h1>
@@ -42,29 +53,60 @@
         <span class="feature-icon">⌕</span>
         <h3>Discover people</h3>
         <p>Find people you may want to connect with.</p>
-        <span class="coming-soon">Next build</span>
+        <a class="coming-soon" href="/discover">Explore people →</a>
       </article>
 
       <article class="feature-card">
         <span class="feature-icon">✉</span>
         <h3>Messages</h3>
         <p>Your private conversations will live here.</p>
-        <span class="coming-soon">Next build</span>
+        <span class="coming-soon">Coming soon</span>
       </article>
 
       <article class="feature-card">
         <span class="feature-icon">◎</span>
         <h3>Communities</h3>
         <p>Find your people around shared interests.</p>
-        <span class="coming-soon">Next build</span>
+        <span class="coming-soon">Coming soon</span>
       </article>
 
     </div>
 
     <p class="dashboard-note">
-      Your account is connected. Social features are coming next.
+      Your account is connected. More social features are coming next.
     </p>
+
   </main>
+
+  <!-- Mobile bottom navigation -->
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+
+    <a class="mobile-nav-item active" href="/dashboard" aria-current="page">
+      <span class="mobile-nav-icon">⌂</span>
+      <span>Home</span>
+    </a>
+
+    <a class="mobile-nav-item" href="/discover">
+      <span class="mobile-nav-icon">⌕</span>
+      <span>Discover</span>
+    </a>
+
+    <a class="mobile-nav-item" href="/feed">
+      <span class="mobile-nav-icon">▤</span>
+      <span>Feed</span>
+    </a>
+
+    <a class="mobile-nav-item" href="/messages">
+      <span class="mobile-nav-icon">✉</span>
+      <span>Messages</span>
+    </a>
+
+    <a class="mobile-nav-item" href="/profile">
+      <span class="mobile-nav-icon">◎</span>
+      <span>Profile</span>
+    </a>
+
+  </nav>
 
   <script type="module" src="js/dashboard.js"></script>
 
