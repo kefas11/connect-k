@@ -41,6 +41,7 @@ async function uploadMedia(file) {
   }
 
   const extension = file.name.split(".").pop().toLowerCase();
+
   const filePath =
     `${currentUser.id}/${Date.now()}-${crypto.randomUUID()}.${extension}`;
 
@@ -115,7 +116,39 @@ async function publishPost(event) {
   }
 }
 
-function createPostElement(post, profile) {
+async function toggleLike(postId, isLiked, button) {
+  button.disabled = true;
+
+  try {
+    let result;
+
+    if (isLiked) {
+      result = await supabase
+        .from("post_likes")
+        .delete()
+        .eq("post_id", postId)
+        .eq("user_id", currentUser.id);
+    } else {
+      result = await supabase
+        .from("post_likes")
+        .insert({
+          post_id: postId,
+          user_id: currentUser.id
+        });
+    }
+
+    if (result.error) throw result.error;
+
+    await loadPosts();
+
+  } catch (error) {
+    console.error("Like error:", error);
+    showMessage(error.message || "Could not update your like.", true);
+    button.disabled = false;
+  }
+}
+
+function createPostElement(post, profile, likeInfo) {
   const article = document.createElement("article");
   article.className = "feature-card";
   article.style.cssText = "padding:22px;margin-bottom:18px;";
@@ -131,8 +164,7 @@ function createPostElement(post, profile) {
     "place-items:center;color:#f4eee4;font-weight:600;flex-shrink:0;";
 
   if (profile?.avatar_url) {
-    avatar.style.backgroundImage =
-      `url("${profile.avatar_url}")`;
+    avatar.style.backgroundImage = `url("${profile.avatar_url}")`;
   } else {
     avatar.textContent =
       (profile?.display_name || "K").charAt(0).toUpperCase();
@@ -174,6 +206,7 @@ function createPostElement(post, profile) {
         "width:100%;max-height:480px;object-fit:contain;" +
         "border-radius:12px;margin-top:12px;";
       article.append(video);
+
     } else if (post.media_type === "image") {
       const image = document.createElement("img");
       image.src = post.media_url;
@@ -185,6 +218,40 @@ function createPostElement(post, profile) {
       article.append(image);
     }
   }
+
+  // Like section
+  const likeSection = document.createElement("div");
+  likeSection.style.cssText =
+    "display:flex;align-items:center;gap:12px;" +
+    "margin-top:18px;padding-top:14px;" +
+    "border-top:1px solid rgba(255,255,255,0.1);";
+
+  const likeButton = document.createElement("button");
+  likeButton.type = "button";
+  likeButton.textContent = likeInfo.isLiked ? "♥ Liked" : "♡ Like";
+  likeButton.setAttribute("aria-pressed", String(likeInfo.isLiked));
+
+  likeButton.style.cssText =
+    "background:transparent;border:1px solid rgba(220,197,165,0.4);" +
+    "color:#dcc5a5;padding:9px 17px;border-radius:25px;" +
+    "cursor:pointer;font:inherit;font-weight:600;";
+
+  const likeCount = document.createElement("span");
+  likeCount.className = "muted";
+  likeCount.textContent =
+    `${likeInfo.count} ${likeInfo.count === 1 ? "like" : "likes"}`;
+
+  if (!likeInfo.available) {
+    likeButton.disabled = true;
+    likeButton.title = "Likes could not be loaded.";
+  } else {
+    likeButton.addEventListener("click", () => {
+      toggleLike(post.id, likeInfo.isLiked, likeButton);
+    });
+  }
+
+  likeSection.append(likeButton, likeCount);
+  article.append(likeSection);
 
   return article;
 }
@@ -221,23 +288,60 @@ async function loadPosts() {
   }
 
   const userIds = [...new Set(posts.map(post => post.user_id))];
+  const postIds = posts.map(post => post.id);
 
-  const { data: profiles, error: profileError } = await supabase
-    .from("profiles")
-    .select("id, username, display_name, avatar_url")
-    .in("id", userIds);
+  const [profileResult, likeResult] = await Promise.all([
+    supabase
+      .from("profiles")
+      .select("id, username, display_name, avatar_url")
+      .in("id", userIds),
 
-  if (profileError) {
-    console.error("Profile lookup error:", profileError);
+    supabase
+      .from("post_likes")
+      .select("post_id, user_id")
+      .in("post_id", postIds)
+  ]);
+
+  if (profileResult.error) {
+    console.error("Profile lookup error:", profileResult.error);
+  }
+
+  if (likeResult.error) {
+    console.error("Likes lookup error:", likeResult.error);
   }
 
   const profileMap = new Map(
-    (profiles || []).map(profile => [profile.id, profile])
+    (profileResult.data || []).map(profile => [
+      profile.id,
+      profile
+    ])
   );
+
+  const likes = likeResult.data || [];
+
+  const likeMap = new Map();
+
+  likes.forEach(like => {
+    if (!likeMap.has(like.post_id)) {
+      likeMap.set(like.post_id, []);
+    }
+
+    likeMap.get(like.post_id).push(like.user_id);
+  });
 
   posts.forEach(post => {
     const profile = profileMap.get(post.user_id);
-    postsContainer.append(createPostElement(post, profile));
+    const postLikes = likeMap.get(post.id) || [];
+
+    const likeInfo = {
+      count: postLikes.length,
+      isLiked: postLikes.includes(currentUser.id),
+      available: !likeResult.error
+    };
+
+    postsContainer.append(
+      createPostElement(post, profile, likeInfo)
+    );
   });
 }
 
