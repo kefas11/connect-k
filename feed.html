@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community Feed | CONNECT-K</title>
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <header class="topbar">
+    <a class="brand" href="dashboard.html">
+      <span class="brand-mark">K</span>
+      <span>
+        <b>CONNECT-<i>K</i></b>
+        <small>Made easy.</small>
+      </span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="dashboard.html">Home</a>
+      <a href="profile.html">My Profile</a>
+      <a class="active" href="feed.html">Feed</a>
+      <a href="#">Discover</a>
+      <a href="#">Communities</a>
+      <a href="#">Messages</a>
+    </nav>
+
+    <button class="btn btn-ghost" id="logout-button">Log out</button>
+  </header>
+
+  <main class="wrap profile-page">
+
+    <p class="eyebrow">YOUR COMMUNITY</p>
+    <h1>What's happening <em>today?</em></h1>
+
+    <section class="feature-card" style="max-width:760px; padding:25px;">
+
+      <h2>Create a post</h2>
+      <p class="muted">Share an idea, a moment or something worth discussing.</p>
+
+      <form id="post-form">
+
+        <textarea
+          id="post-content"
+          placeholder="What's on your mind?"
+          maxlength="3000"
+          rows="5"
+          required
+        ></textarea>
+
+        <label for="post-media">Add a photo or video</label>
+        <input
+          type="file"
+          id="post-media"
+          accept="image/jpeg,image/png,image/webp,video/mp4,video/webm"
+        >
+
+        <p id="post-message" class="form-message" role="status"></p>
+
+        <button class="btn btn-red" type="submit" id="publish-button">
+          Publish post
+        </button>
+
+      </form>
+    </section>
+
+    <section style="max-width:760px; margin-top:35px;">
+      <h2>Community feed</h2>
+      <div id="posts-container">
+        <p class="muted">Your community posts will appear here.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module" src="js/feed.js"></script>
+
+</body>
+</html>
