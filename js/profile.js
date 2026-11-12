@@ -11,11 +11,14 @@ const coverInput = $("#cover-input");
 
 const avatarButton = $("#avatar-upload-button");
 const coverButton = $("#cover-upload-button");
+const logoutButton = $("#logout-button");
 
 let currentUser = null;
 let currentProfile = null;
+let uploading = false;
 
 function showMessage(text, isError = false) {
+  if (!message) return;
   message.textContent = text;
   message.style.color = isError ? "#ff7880" : "#dcc5a5";
 }
@@ -44,10 +47,7 @@ function displayProfile(profile) {
     ? `url("${profile.avatar_url}")`
     : "";
 
-  avatar.classList.toggle(
-    "has-image",
-    Boolean(profile.avatar_url)
-  );
+  avatar.classList.toggle("has-image", Boolean(profile.avatar_url));
 
   const cover = $("#cover-preview");
 
@@ -55,10 +55,7 @@ function displayProfile(profile) {
     ? `url("${profile.cover_url}")`
     : "";
 
-  cover.classList.toggle(
-    "has-image",
-    Boolean(profile.cover_url)
-  );
+  cover.classList.toggle("has-image", Boolean(profile.cover_url));
 }
 
 async function loadProfile() {
@@ -91,15 +88,25 @@ async function loadProfile() {
   displayProfile(data);
 }
 
-avatarButton.addEventListener("click", () => {
-  avatarInput.click();
+// Open the native file picker directly from the user's button click.
+function openImagePicker(input) {
+  if (!input) {
+    showMessage("The image picker could not be found. Please refresh the page.", true);
+    return;
+  }
+
+  input.click();
+}
+
+avatarButton?.addEventListener("click", () => {
+  openImagePicker(avatarInput);
 });
 
-coverButton.addEventListener("click", () => {
-  coverInput.click();
+coverButton?.addEventListener("click", () => {
+  openImagePicker(coverInput);
 });
 
-form.addEventListener("submit", async (event) => {
+form?.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   if (!currentUser || !currentProfile) {
@@ -118,10 +125,7 @@ form.addEventListener("submit", async (event) => {
     .filter(Boolean);
 
   if (!displayName || displayName.length > 60) {
-    showMessage(
-      "Display name must be between 1 and 60 characters.",
-      true
-    );
+    showMessage("Display name must be between 1 and 60 characters.", true);
     return;
   }
 
@@ -136,43 +140,51 @@ form.addEventListener("submit", async (event) => {
   saveButton.disabled = true;
   saveButton.textContent = "Saving...";
 
-  const { data, error } = await supabase
-    .from("profiles")
-    .update({
-      display_name: displayName,
-      username,
-      bio: bio || null,
-      institution: institution || null,
-      interests
-    })
-    .eq("id", currentUser.id)
-    .select(
-      "id, username, display_name, avatar_url, cover_url, bio, institution, interests"
-    )
-    .single();
+  try {
+    const { data, error } = await supabase
+      .from("profiles")
+      .update({
+        display_name: displayName,
+        username,
+        bio: bio || null,
+        institution: institution || null,
+        interests
+      })
+      .eq("id", currentUser.id)
+      .select(
+        "id, username, display_name, avatar_url, cover_url, bio, institution, interests"
+      )
+      .single();
 
-  saveButton.disabled = false;
-  saveButton.textContent = "Save changes";
+    if (error) throw error;
 
-  if (error) {
+    currentProfile = data;
+    displayProfile(data);
+
+    showMessage("Your profile has been saved successfully.");
+
+  } catch (error) {
     showMessage(
       error.code === "23505"
         ? "That username is already taken. Choose another."
         : "Could not save your profile: " + error.message,
       true
     );
-    return;
+
+  } finally {
+    saveButton.disabled = false;
+    saveButton.textContent = "Save changes";
   }
-
-  currentProfile = data;
-  displayProfile(data);
-
-  showMessage("Your profile has been saved successfully.");
 });
 
 async function uploadImage(file, type) {
   if (!currentUser || !currentProfile) {
     showMessage("Your profile is still loading. Please try again.", true);
+    return;
+  }
+
+  if (uploading) {
+    showMessage("Please wait for the current image upload to finish.");
     return;
   }
 
@@ -201,64 +213,68 @@ async function uploadImage(file, type) {
   const filePath =
     `${currentUser.id}/${type}_${Date.now()}.${extension}`;
 
+  uploading = true;
+
+  if (avatarButton) avatarButton.disabled = true;
+  if (coverButton) coverButton.disabled = true;
+
   showMessage(
     `Uploading ${type === "avatar" ? "profile picture" : "cover photo"}...`
   );
 
-  const { error: uploadError } = await supabase.storage
-    .from("profile-media")
-    .upload(filePath, file, {
-      contentType: file.type,
-      upsert: false
-    });
+  try {
+    const { error: uploadError } = await supabase.storage
+      .from("profile-media")
+      .upload(filePath, file, {
+        contentType: file.type,
+        upsert: false
+      });
 
-  if (uploadError) {
+    if (uploadError) throw uploadError;
+
+    const { data: urlData } = supabase.storage
+      .from("profile-media")
+      .getPublicUrl(filePath);
+
+    const imageUrl = urlData.publicUrl;
+
+    const updateField = type === "avatar"
+      ? { avatar_url: imageUrl }
+      : { cover_url: imageUrl };
+
+    const { data, error: updateError } = await supabase
+      .from("profiles")
+      .update(updateField)
+      .eq("id", currentUser.id)
+      .select(
+        "id, username, display_name, avatar_url, cover_url, bio, institution, interests"
+      )
+      .single();
+
+    if (updateError) throw updateError;
+
+    currentProfile = data;
+    displayProfile(data);
+
     showMessage(
-      "Image upload failed: " + uploadError.message,
-      true
+      type === "avatar"
+        ? "Profile picture updated successfully."
+        : "Cover photo updated successfully."
     );
-    return;
+
+  } catch (error) {
+    console.error("Image upload failed:", error);
+    showMessage("Image upload failed: " + error.message, true);
+
+  } finally {
+    uploading = false;
+
+    if (avatarButton) avatarButton.disabled = false;
+    if (coverButton) coverButton.disabled = false;
   }
-
-  const { data: urlData } = supabase.storage
-    .from("profile-media")
-    .getPublicUrl(filePath);
-
-  const imageUrl = urlData.publicUrl;
-
-  const updateField = type === "avatar"
-    ? { avatar_url: imageUrl }
-    : { cover_url: imageUrl };
-
-  const { data, error: updateError } = await supabase
-    .from("profiles")
-    .update(updateField)
-    .eq("id", currentUser.id)
-    .select(
-      "id, username, display_name, avatar_url, cover_url, bio, institution, interests"
-    )
-    .single();
-
-  if (updateError) {
-    showMessage(
-      "Image uploaded, but profile update failed: " +
-      updateError.message,
-      true
-    );
-    return;
-  }
-
-  currentProfile = data;
-  displayProfile(data);
-
-  showMessage(
-    type === "avatar"
-      ? "Profile picture updated successfully."
-      : "Cover photo updated successfully."
-  );
 }
 
-avatarInput.addEventListener("change", async (event) => {
+avatarInput?.addEventListener("change", async (event) => {
   const file = event.target.files?.[0];
 
   if (file) {
@@ -268,7 +284,7 @@ avatarInput.addEventListener("change", async (event) => {
   event.target.value = "";
 });
 
-coverInput.addEventListener("change", async (event) => {
+coverInput?.addEventListener("change", async (event) => {
   const file = event.target.files?.[0];
 
   if (file) {
@@ -278,7 +294,7 @@ coverInput.addEventListener("change", async (event) => {
   event.target.value = "";
 });
 
-$("#logout-button").addEventListener("click", async () => {
+logoutButton?.addEventListener("click", async () => {
   await supabase.auth.signOut();
   location.href = "/";
 });
