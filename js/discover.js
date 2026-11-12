@@ -27,21 +27,25 @@ function getSharedInterests(person) {
   );
 }
 
-function createButton(label, action, disabled = false) {
+function createButton(label, action, options = {}) {
   const button = document.createElement("button");
 
   button.type = "button";
   button.textContent = label;
-  button.disabled = disabled;
+  button.disabled = options.disabled || false;
 
-  button.style.cssText =
-    "padding:11px 18px;border-radius:30px;" +
-    "border:1px solid rgba(220,197,165,.4);" +
-    "background:linear-gradient(135deg,#ef3444,#b20b1b);" +
-    "color:white;font:600 12px 'DM Sans',sans-serif;" +
-    "cursor:pointer;";
+  button.style.cssText = options.secondary
+    ? "padding:11px 18px;border-radius:30px;" +
+      "border:1px solid rgba(220,197,165,.4);" +
+      "background:rgba(220,197,165,.09);" +
+      "color:#f4eee4;font:600 12px 'DM Sans',sans-serif;" +
+      "cursor:pointer;"
+    : "padding:11px 18px;border-radius:30px;" +
+      "border:1px solid rgba(220,197,165,.4);" +
+      "background:linear-gradient(135deg,#ef3444,#b20b1b);" +
+      "color:white;font:600 12px 'DM Sans',sans-serif;" +
+      "cursor:pointer;";
 
-  // Pass the actual button to the action handler.
   button.addEventListener("click", () => action(button));
 
   return button;
@@ -98,6 +102,12 @@ async function handleRequestAction(person, action, button) {
   }
 
   await loadPeople();
+}
+
+function startMessage(person) {
+  const recipient = encodeURIComponent(person.id);
+
+  window.location.href = `/messages?to=${recipient}`;
 }
 
 function createPersonCard(person) {
@@ -161,7 +171,7 @@ function createPersonCard(person) {
   }
 
   // Connection statistics
-  // Only numbers are displayed, never member identities.
+  // Only counts are shown, never connection identities.
   const stats = document.createElement("div");
 
   stats.style.cssText =
@@ -239,7 +249,7 @@ function createPersonCard(person) {
     card.append(interestsTitle, interests);
   }
 
-  // Connection request actions
+  // Connection and messaging actions
   const request = getRequestStatus(person.id);
   const actions = document.createElement("div");
 
@@ -252,7 +262,8 @@ function createPersonCard(person) {
     connected.textContent = "✓ Connected";
 
     connected.style.cssText =
-      "color:#dcc5a5;font-size:13px;font-weight:600;";
+      "color:#dcc5a5;font-size:13px;font-weight:600;" +
+      "align-self:center;";
 
     actions.append(connected);
 
@@ -278,7 +289,8 @@ function createPersonCard(person) {
       ),
       createButton(
         "Decline",
-        button => handleRequestAction(person, "decline", button)
+        button => handleRequestAction(person, "decline", button),
+        { secondary: true }
       )
     );
 
@@ -290,6 +302,15 @@ function createPersonCard(person) {
       )
     );
   }
+
+  // Private messaging is available independently of connection status.
+  actions.append(
+    createButton(
+      "Message",
+      () => startMessage(person),
+      { secondary: true }
+    )
+  );
 
   card.append(actions);
 
@@ -356,7 +377,7 @@ async function loadPeople() {
 
   people = data || [];
 
-  // Load requests involving the signed-in user only.
+  // Load requests involving the signed-in user.
   const { data: requests, error: requestError } = await supabase
     .from("connection_requests")
     .select("id, sender_id, receiver_id, status, created_at")
@@ -417,26 +438,18 @@ async function loadPeople() {
       ]);
 
       if (connections.error) {
-        console.error(
-          "Connection count error:",
-          connections.error
-        );
+        console.error("Connection count error:", connections.error);
       }
 
       if (mutuals.error) {
-        console.error(
-          "Mutual count error:",
-          mutuals.error
-        );
+        console.error("Mutual count error:", mutuals.error);
       }
 
       return {
         id: person.id,
-
         connections: connections.error
           ? 0
           : Number(connections.data || 0),
-
         mutuals: mutuals.error
           ? 0
           : Number(mutuals.data || 0)
@@ -475,10 +488,7 @@ async function initializeDiscover() {
     .single();
 
   if (profileError) {
-    console.error(
-      "Your profile could not be loaded:",
-      profileError
-    );
+    console.error("Your profile could not be loaded:", profileError);
 
     showMessage(
       "Could not load your profile information.",

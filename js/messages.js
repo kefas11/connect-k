@@ -252,6 +252,7 @@ async function acceptRequest(conversationId) {
     if (error) throw error;
 
     showStatus("Message request accepted.");
+
     await loadConversations();
 
     const acceptedConversation = conversations.find(
@@ -286,6 +287,23 @@ async function declineRequest(conversationId) {
   }
 }
 
+function enableComposer(recipientId, recipientName) {
+  selectedConversationId = null;
+  selectedRecipientId = recipientId;
+
+  chatTitle.textContent = `Message ${recipientName}`;
+
+  messageInput.disabled = false;
+  sendButton.disabled = false;
+
+  renderEmpty(
+    messagesContainer,
+    "Start a private conversation with this member."
+  );
+
+  messageInput.focus();
+}
+
 async function openConversation(conversation) {
   const otherMember = getOtherMember(conversation);
 
@@ -298,6 +316,7 @@ async function openConversation(conversation) {
   selectedRecipientId = otherMember.user_id;
 
   chatTitle.textContent = getOtherName(conversation);
+
   messageInput.disabled = false;
   sendButton.disabled = false;
 
@@ -349,13 +368,82 @@ async function openConversation(conversation) {
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 
+async function openRecipientFromDiscover() {
+  const params = new URLSearchParams(window.location.search);
+  const recipientId = params.get("to");
+
+  if (!recipientId) return;
+
+  const uuidPattern =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+  if (
+    recipientId === currentUser.id ||
+    !uuidPattern.test(recipientId)
+  ) {
+    showStatus("Invalid message recipient.", true);
+    return;
+  }
+
+  const { data: recipient, error } = await supabase
+    .from("profiles")
+    .select("id, display_name")
+    .eq("id", recipientId)
+    .maybeSingle();
+
+  if (error || !recipient) {
+    showStatus("We could not find this member's profile.", true);
+    return;
+  }
+
+  const existingConversation = conversations.find(conversation =>
+    (conversation.conversation_members || []).some(
+      member => member.user_id === recipientId
+    )
+  );
+
+  if (existingConversation?.request_status === "accepted") {
+    await openConversation(existingConversation);
+    return;
+  }
+
+  if (existingConversation?.request_status === "pending") {
+    selectedRecipientId = null;
+    messageInput.disabled = true;
+    sendButton.disabled = true;
+
+    if (existingConversation.created_by === currentUser.id) {
+      chatTitle.textContent = `Request sent to ${recipient.display_name}`;
+
+      renderEmpty(
+        messagesContainer,
+        "Your message request is waiting for a response."
+      );
+
+      showStatus("You can continue chatting after they accept.");
+
+    } else {
+      chatTitle.textContent = `Request from ${recipient.display_name}`;
+
+      renderEmpty(
+        messagesContainer,
+        "Please accept or decline this request in the Message Requests section."
+      );
+    }
+
+    return;
+  }
+
+  enableComposer(recipient.id, recipient.display_name);
+}
+
 messageForm.addEventListener("submit", async event => {
   event.preventDefault();
 
   const body = messageInput.value.trim();
 
   if (!body || !selectedRecipientId) {
-    showStatus("Choose a conversation first.", true);
+    showStatus("Choose a valid conversation first.", true);
     return;
   }
 
@@ -363,7 +451,7 @@ messageForm.addEventListener("submit", async event => {
   sendButton.textContent = "Sending...";
 
   try {
-    const { error } = await supabase.rpc(
+    const { data: conversationId, error } = await supabase.rpc(
       "ck_send_direct_message",
       {
         target_user_id: selectedRecipientId,
@@ -374,16 +462,31 @@ messageForm.addEventListener("submit", async event => {
     if (error) throw error;
 
     messageInput.value = "";
-    showStatus("Message sent.");
+    selectedConversationId = conversationId;
 
     await loadConversations();
 
     const updatedConversation = conversations.find(
-      conversation => conversation.id === selectedConversationId
+      conversation => conversation.id === conversationId
     );
 
-    if (updatedConversation) {
+    if (updatedConversation?.request_status === "accepted") {
       await openConversation(updatedConversation);
+      showStatus("Message sent.");
+
+    } else {
+      selectedRecipientId = null;
+      messageInput.disabled = true;
+      sendButton.disabled = true;
+
+      chatTitle.textContent = "Message request sent";
+
+      renderEmpty(
+        messagesContainer,
+        "Your first message has been sent. You can continue chatting after the recipient accepts your request."
+      );
+
+      showStatus("Your message request is awaiting acceptance.");
     }
 
   } catch (error) {
@@ -391,8 +494,8 @@ messageForm.addEventListener("submit", async event => {
     showStatus(error.message, true);
 
   } finally {
-    sendButton.disabled = false;
     sendButton.textContent = "Send message";
+    sendButton.disabled = !selectedRecipientId;
   }
 });
 
@@ -417,6 +520,7 @@ async function initializeMessages() {
   currentUser = data.session.user;
 
   await loadConversations();
+  await openRecipientFromDiscover();
 }
 
 initializeMessages();
