@@ -29,9 +29,16 @@
       "destination": "/feed.html"
     },
     {
-        "source": "/discover",
-        "destination": "/discover.html"
+      "source": "/discover",
+      "destination": "/discover.html"
+    },
+    {
+      "source": "/connections",
+      "destination": "/connections.html"
     }
-
+    {
+  "source": "/member",
+  "destination": "/member.html"
+}
   ]
 }

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07130f">
+  <title>Member Profile | CONNECT-K</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <a class="brand" href="/dashboard">
+      <span class="brand-mark">K</span>
+      <span>
+        <b>CONNECT-<i>K</i></b>
+        <small>Made easy.</small>
+      </span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="/dashboard">Home</a>
+      <a href="/profile">My Profile</a>
+      <a href="/feed">Feed</a>
+      <a href="/discover">Discover</a>
+      <a class="active" href="/connections">Connections</a>
+      <a href="/messages">Messages</a>
+    </nav>
+
+    <button class="btn btn-ghost" id="logout-button" type="button">
+      Log out
+    </button>
+  </header>
+
+  <main class="profile-page wrap">
+    <p class="eyebrow">CONNECT-K COMMUNITY</p>
+    <h1>Member <em>profile.</em></h1>
+
+    <section class="profile-card">
+      <div class="profile-cover" id="member-cover"></div>
+
+      <div class="profile-avatar-row">
+        <div class="profile-avatar" id="member-avatar">K</div>
+      </div>
+
+      <div class="profile-details">
+        <h2 id="member-name">Loading profile...</h2>
+        <p id="member-username"></p>
+      </div>
+    </section>
+
+    <section class="profile-editor feature-card">
+      <h2>About</h2>
+      <p id="member-bio" class="muted">Loading...</p>
+
+      <h3>Institution</h3>
+      <p id="member-institution" class="muted">Not provided</p>
+
+      <h3>Interests</h3>
+      <div id="member-interests" class="muted">Not provided</div>
+
+      <p id="member-message" class="form-message" role="status"></p>
+
+      <a href="/connections" class="btn btn-red">
+        Back to connections
+      </a>
+    </section>
+  </main>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a class="mobile-nav-item" href="/dashboard">
+      <span class="mobile-nav-icon">⌂</span>
+      <span>Home</span>
+    </a>
+    <a class="mobile-nav-item" href="/discover">
+      <span class="mobile-nav-icon">⌕</span>
+      <span>Discover</span>
+    </a>
+    <a class="mobile-nav-item" href="/feed">
+      <span class="mobile-nav-icon">▤</span>
+      <span>Feed</span>
+    </a>
+    <a class="mobile-nav-item" href="/messages">
+      <span class="mobile-nav-icon">✉</span>
+      <span>Messages</span>
+    </a>
+    <a class="mobile-nav-item" href="/profile">
+      <span class="mobile-nav-icon">◉</span>
+      <span>Profile</span>
+    </a>
+  </nav>
+
+  <script type="module" src="/js/member.js"></script>
+</body>
+</html>

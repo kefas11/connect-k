@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07130f">
+  <title>My Connections | CONNECT-K</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <header class="topbar">
+    <a class="brand" href="/dashboard">
+      <b>CONNECT-<span>K</span></b>
+      <small>Made easy.</small>
+    </a>
+
+    <nav class="nav-links">
+      <a href="/dashboard">Home</a>
+      <a href="/profile">My Profile</a>
+      <a href="/feed">Feed</a>
+      <a href="/discover">Discover</a>
+      <a class="active" href="/connections">Connections</a>
+      <a href="/messages">Messages</a>
+    </nav>
+
+    <button id="logout-button" type="button">Log out</button>
+  </header>
+
+  <main class="page-container">
+    <section class="page-heading">
+      <p class="eyebrow">YOUR PEOPLE</p>
+      <h1>My <span>Connections.</span></h1>
+      <p>Keep the people who matter close.</p>
+    </section>
+
+    <section class="connections-panel">
+      <div class="connections-toolbar">
+        <div>
+          <h2>Your Connections</h2>
+          <p id="connection-count">Loading connections...</p>
+        </div>
+
+        <input
+          type="search"
+          id="connection-search"
+          placeholder="Search connections..."
+          aria-label="Search connections"
+        >
+      </div>
+
+      <div id="connections-container" aria-live="polite">
+        <p class="empty-state">Loading your connections...</p>
+      </div>
+    </section>
+  </main>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a class="mobile-nav-item" href="/dashboard">
+      <span class="mobile-nav-icon">⌂</span>
+      <span>Home</span>
+    </a>
+    <a class="mobile-nav-item" href="/discover">
+      <span class="mobile-nav-icon">⌕</span>
+      <span>Discover</span>
+    </a>
+    <a class="mobile-nav-item" href="/feed">
+      <span class="mobile-nav-icon">▤</span>
+      <span>Feed</span>
+    </a>
+    <a class="mobile-nav-item" href="/messages">
+      <span class="mobile-nav-icon">✉</span>
+      <span>Messages</span>
+    </a>
+    <a class="mobile-nav-item" href="/profile">
+      <span class="mobile-nav-icon">◉</span>
+      <span>Profile</span>
+    </a>
+  </nav>
+
+  <script type="module" src="/js/connections.js"></script>
+</body>
+</html>
