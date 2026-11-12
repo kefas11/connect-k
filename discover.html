@@ -4,18 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#07130f">
-
   <title>Discover People — CONNECT-K</title>
-
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="/css/style.css">
 </head>
-
 <body>
-
   <header class="topbar">
-
     <a class="brand" href="/dashboard">
       <span class="brand-mark">K</span>
       <span>
@@ -23,7 +17,6 @@
         <small>Made easy.</small>
       </span>
     </a>
-
     <nav class="nav-links" aria-label="Main navigation">
       <a href="/dashboard">Home</a>
       <a href="/profile">My Profile</a>
@@ -33,87 +26,61 @@
       <a href="/communities">Communities</a>
       <a href="/messages">Messages</a>
     </nav>
-
     <button class="btn btn-ghost" id="logout-button" type="button">
       Log out
     </button>
-
   </header>
-
   <main class="wrap profile-page">
-
     <p class="eyebrow">EXPAND YOUR CIRCLE</p>
-
     <h1>Meet your <em>kind of people.</em></h1>
-
     <p class="muted">
       Discover people, explore shared interests and build meaningful connections.
     </p>
-
     <section class="feature-card" style="padding:22px; margin-top:28px;">
-
       <label for="discover-search">Find people</label>
-
       <input
         id="discover-search"
         type="search"
         placeholder="Search by name, username or interest..."
       >
-
       <p class="muted" style="margin-top:12px;">
         Discover people beyond your existing circle.
       </p>
-
     </section>
-
     <section style="margin-top:35px;">
-
       <p class="eyebrow">YOUR NEXT CONNECTION</p>
-
       <h2>People you may connect with</h2>
-
       <div
         id="discover-container"
         style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:20px;margin-top:22px;"
       >
         <p class="muted">Loading people...</p>
       </div>
-
     </section>
-
   </main>
-
   <nav class="mobile-nav" aria-label="Mobile navigation">
-
     <a class="mobile-nav-item" href="/dashboard">
       <span class="mobile-nav-icon">⌂</span>
       <span>Home</span>
     </a>
-
     <a class="mobile-nav-item active" href="/discover" aria-current="page">
       <span class="mobile-nav-icon">⌕</span>
       <span>Discover</span>
     </a>
-
     <a class="mobile-nav-item" href="/connections">
       <span class="mobile-nav-icon">♧</span>
       <span>Connections</span>
     </a>
-
     <a class="mobile-nav-item" href="/feed">
       <span class="mobile-nav-icon">▤</span>
       <span>Feed</span>
     </a>
-
     <a class="mobile-nav-item" href="/profile">
       <span class="mobile-nav-icon">◎</span>
       <span>Profile</span>
     </a>
-
   </nav>
-<script type="module" src="/js/notification-bell.js"></script>
-
+  <script type="module" src="/js/notification-bell.js"></script>
   <script type="module" src="/js/discover.js"></script>
-
 </body>
 </html>

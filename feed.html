@@ -5,14 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#07130f">
   <title>Community Feed | CONNECT-K</title>
-
   <link rel="stylesheet" href="/css/style.css">
-
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
-
   <header class="topbar">
     <a class="brand" href="/dashboard">
       <span class="brand-mark">K</span>
@@ -21,7 +17,6 @@
         <small>Made easy.</small>
       </span>
     </a>
-
     <nav class="nav-links" aria-label="Main navigation">
       <a href="/dashboard">Home</a>
       <a href="/profile">My Profile</a>
@@ -31,24 +26,17 @@
       <a href="/communities">Communities</a>
       <a href="/messages">Messages</a>
     </nav>
-
     <button class="btn btn-ghost" id="logout-button" type="button">
       Log out
     </button>
   </header>
-
   <main class="wrap profile-page">
-
     <p class="eyebrow">YOUR COMMUNITY</p>
     <h1>What's happening <em>today?</em></h1>
-
     <section class="feature-card" style="max-width:760px; padding:25px;">
-
       <h2>Create a post</h2>
       <p class="muted">Share an idea, a moment or something worth discussing.</p>
-
       <form id="post-form">
-
         <textarea
           id="post-content"
           placeholder="What's on your mind?"
@@ -56,63 +44,48 @@
           rows="5"
           required
         ></textarea>
-
         <label for="post-media">Add a photo or video</label>
         <input
           type="file"
           id="post-media"
           accept="image/jpeg,image/png,image/webp,video/mp4,video/webm"
         >
-
         <p id="post-message" class="form-message" role="status"></p>
-
         <button class="btn btn-red" type="submit" id="publish-button">
           Publish post
         </button>
-
       </form>
     </section>
-
     <section style="max-width:760px; margin-top:35px;">
       <h2>Community feed</h2>
       <div id="posts-container">
         <p class="muted">Your community posts will appear here.</p>
       </div>
     </section>
-
   </main>
-
   <nav class="mobile-nav" aria-label="Mobile navigation">
-
     <a class="mobile-nav-item" href="/dashboard">
       <span class="mobile-nav-icon">⌂</span>
       <span>Home</span>
     </a>
-
     <a class="mobile-nav-item" href="/discover">
       <span class="mobile-nav-icon">⌕</span>
       <span>Discover</span>
     </a>
-
     <a class="mobile-nav-item" href="/connections">
       <span class="mobile-nav-icon">♧</span>
       <span>Connections</span>
     </a>
-
     <a class="mobile-nav-item active" href="/feed" aria-current="page">
       <span class="mobile-nav-icon">▤</span>
       <span>Feed</span>
     </a>
-
     <a class="mobile-nav-item" href="/profile">
       <span class="mobile-nav-icon">◎</span>
       <span>Profile</span>
     </a>
-
   </nav>
-<script type="module" src="/js/notification-bell.js"></script>
-
+  <script type="module" src="/js/notification-bell.js"></script>
   <script type="module" src="/js/feed.js"></script>
-
 </body>
 </html>
