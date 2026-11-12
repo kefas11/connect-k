@@ -3,17 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#07130f">
   <title>Your space — CONNECT-K</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
 
   <header class="topbar">
-
     <a class="brand" href="/dashboard">
       <span class="brand-mark">K</span>
       <span>
@@ -27,6 +26,7 @@
       <a href="/profile">My Profile</a>
       <a href="/feed">Feed</a>
       <a href="/discover">Discover</a>
+      <a href="/connections">Connections</a>
       <a href="/communities">Communities</a>
       <a href="/messages">Messages</a>
     </nav>
@@ -34,7 +34,6 @@
     <button class="btn btn-ghost" id="logout-button" type="button">
       Log out
     </button>
-
   </header>
 
   <main class="dashboard wrap">
@@ -54,6 +53,13 @@
         <h3>Discover people</h3>
         <p>Find people you may want to connect with.</p>
         <a class="coming-soon" href="/discover">Explore people →</a>
+      </article>
+
+      <article class="feature-card">
+        <span class="feature-icon">♧</span>
+        <h3>My Connections</h3>
+        <p>See and find the people you've connected with.</p>
+        <a class="coming-soon" href="/connections">View connections →</a>
       </article>
 
       <article class="feature-card">
@@ -78,7 +84,6 @@
 
   </main>
 
-  <!-- Mobile bottom navigation -->
   <nav class="mobile-nav" aria-label="Mobile navigation">
 
     <a class="mobile-nav-item active" href="/dashboard" aria-current="page">
@@ -91,14 +96,14 @@
       <span>Discover</span>
     </a>
 
+    <a class="mobile-nav-item" href="/connections">
+      <span class="mobile-nav-icon">♧</span>
+      <span>Connections</span>
+    </a>
+
     <a class="mobile-nav-item" href="/feed">
       <span class="mobile-nav-icon">▤</span>
       <span>Feed</span>
-    </a>
-
-    <a class="mobile-nav-item" href="/messages">
-      <span class="mobile-nav-icon">✉</span>
-      <span>Messages</span>
     </a>
 
     <a class="mobile-nav-item" href="/profile">
@@ -108,7 +113,7 @@
 
   </nav>
 
-  <script type="module" src="js/dashboard.js"></script>
+  <script type="module" src="/js/dashboard.js"></script>
 
 </body>
 </html>

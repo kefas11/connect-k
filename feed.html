@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07130f">
   <title>Community Feed | CONNECT-K</title>
 
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -13,7 +14,7 @@
 <body>
 
   <header class="topbar">
-    <a class="brand" href="dashboard.html">
+    <a class="brand" href="/dashboard">
       <span class="brand-mark">K</span>
       <span>
         <b>CONNECT-<i>K</i></b>
@@ -21,16 +22,19 @@
       </span>
     </a>
 
-    <nav class="nav-links">
-  <a href="/dashboard">Home</a>
-  <a href="/profile">My Profile</a>
-  <a class="active" href="/feed">Feed</a>
-  <a href="/discover">Discover</a>
-  <a href="/communities">Communities</a>
-  <a href="/messages">Messages</a>
-</nav>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="/dashboard">Home</a>
+      <a href="/profile">My Profile</a>
+      <a class="active" href="/feed">Feed</a>
+      <a href="/discover">Discover</a>
+      <a href="/connections">Connections</a>
+      <a href="/communities">Communities</a>
+      <a href="/messages">Messages</a>
+    </nav>
 
-    <button class="btn btn-ghost" id="logout-button">Log out</button>
+    <button class="btn btn-ghost" id="logout-button" type="button">
+      Log out
+    </button>
   </header>
 
   <main class="wrap profile-page">
@@ -72,13 +76,42 @@
     <section style="max-width:760px; margin-top:35px;">
       <h2>Community feed</h2>
       <div id="posts-container">
-  <p class="muted">Your community posts will appear here.</p>
-</div>
+        <p class="muted">Your community posts will appear here.</p>
+      </div>
     </section>
 
   </main>
 
-  <script type="module" src="js/feed.js"></script>
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+
+    <a class="mobile-nav-item" href="/dashboard">
+      <span class="mobile-nav-icon">⌂</span>
+      <span>Home</span>
+    </a>
+
+    <a class="mobile-nav-item" href="/discover">
+      <span class="mobile-nav-icon">⌕</span>
+      <span>Discover</span>
+    </a>
+
+    <a class="mobile-nav-item" href="/connections">
+      <span class="mobile-nav-icon">♧</span>
+      <span>Connections</span>
+    </a>
+
+    <a class="mobile-nav-item active" href="/feed" aria-current="page">
+      <span class="mobile-nav-icon">▤</span>
+      <span>Feed</span>
+    </a>
+
+    <a class="mobile-nav-item" href="/profile">
+      <span class="mobile-nav-icon">◎</span>
+      <span>Profile</span>
+    </a>
+
+  </nav>
+
+  <script type="module" src="/js/feed.js"></script>
 
 </body>
 </html>

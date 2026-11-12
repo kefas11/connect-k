@@ -3,19 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07130f">
 
   <title>Discover People — CONNECT-K</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
 
   <header class="topbar">
 
-    <a class="brand" href="/">
+    <a class="brand" href="/dashboard">
       <span class="brand-mark">K</span>
       <span>
         <b>CONNECT-<i>K</i></b>
@@ -23,11 +24,12 @@
       </span>
     </a>
 
-    <nav class="nav-links">
+    <nav class="nav-links" aria-label="Main navigation">
       <a href="/dashboard">Home</a>
       <a href="/profile">My Profile</a>
       <a href="/feed">Feed</a>
       <a class="active" href="/discover">Discover</a>
+      <a href="/connections">Connections</a>
       <a href="/communities">Communities</a>
       <a href="/messages">Messages</a>
     </nav>
@@ -81,7 +83,36 @@
 
   </main>
 
-  <script type="module" src="js/discover.js"></script>
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+
+    <a class="mobile-nav-item" href="/dashboard">
+      <span class="mobile-nav-icon">⌂</span>
+      <span>Home</span>
+    </a>
+
+    <a class="mobile-nav-item active" href="/discover" aria-current="page">
+      <span class="mobile-nav-icon">⌕</span>
+      <span>Discover</span>
+    </a>
+
+    <a class="mobile-nav-item" href="/connections">
+      <span class="mobile-nav-icon">♧</span>
+      <span>Connections</span>
+    </a>
+
+    <a class="mobile-nav-item" href="/feed">
+      <span class="mobile-nav-icon">▤</span>
+      <span>Feed</span>
+    </a>
+
+    <a class="mobile-nav-item" href="/profile">
+      <span class="mobile-nav-icon">◎</span>
+      <span>Profile</span>
+    </a>
+
+  </nav>
+
+  <script type="module" src="/js/discover.js"></script>
 
 </body>
 </html>
