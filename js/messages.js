@@ -341,25 +341,37 @@ async function openConversation(conversation) {
   data.forEach(message => {
     const bubble = document.createElement("div");
 
-    bubble.style.cssText =
-      "max-width:85%;width:fit-content;padding:12px 16px;" +
-      "border-radius:15px;margin:10px 0;line-height:1.5;" +
-      "overflow-wrap:anywhere;";
-
     const isMine = message.sender_id === currentUser.id;
 
+    bubble.style.cssText =
+      "max-width:82%;width:fit-content;" +
+      "padding:13px 17px;" +
+      "border-radius:18px;" +
+      "margin:12px 0;" +
+      "line-height:1.6;" +
+      "overflow-wrap:anywhere;" +
+      "box-shadow:0 5px 15px rgba(0,0,0,.16);" +
+      "border:1px solid rgba(255,255,255,.12);";
+
     bubble.style.marginLeft = isMine ? "auto" : "0";
+    bubble.style.marginRight = isMine ? "0" : "auto";
+
+    // Your messages: Royal purple.
+    // Received messages: Crimson red.
     bubble.style.background = isMine
-      ? "linear-gradient(135deg,#ef3444,#b20b1b)"
-      : "rgba(220,197,165,.12)";
+      ? "linear-gradient(135deg,#8148B8,#552582)"
+      : "linear-gradient(135deg,#C02B43,#86182D)";
 
     const body = document.createElement("p");
     body.textContent = message.body;
-    body.style.margin = "0";
+    body.style.cssText =
+      "margin:0;color:#fff8f0;font-size:14px;";
 
     const time = document.createElement("small");
     time.textContent = new Date(message.created_at).toLocaleString();
-    time.style.opacity = ".7";
+    time.style.cssText =
+      "display:block;margin-top:7px;color:#f1d9e5;" +
+      "font-size:10px;opacity:.9;";
 
     bubble.append(body, time);
     messagesContainer.append(bubble);

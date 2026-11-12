@@ -311,3 +311,159 @@
   }
 
 }
+/* ==========================================
+   CONNECT-K PREMIUM MESSAGING DESIGN
+   Emerald Green + Royal Purple + Crimson
+========================================== */
+
+body:has(#messages-container) {
+  background:
+    radial-gradient(ellipse at 75% 25%, rgba(27, 103, 65, .25), transparent 42%),
+    linear-gradient(145deg, #061a12, #0b2b1d 55%, #071910);
+}
+
+/* Messaging page sections */
+.profile-page:has(#messages-container) > .feature-card {
+  background: linear-gradient(145deg, #123b29, #0a291c);
+  border: 1px solid rgba(119, 183, 137, .32);
+  border-radius: 22px;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, .16);
+  padding: 25px;
+}
+
+.profile-page:has(#messages-container) > .feature-card h2 {
+  color: #f4ebdd;
+  font-family: var(--serif);
+  font-size: 30px;
+}
+
+.profile-page:has(#messages-container) > .feature-card > .muted {
+  color: #c3d2c6;
+}
+
+/* Conversation cards */
+#conversations-container .feature-card,
+#requests-container .feature-card {
+  background: linear-gradient(135deg, #16442f, #102f22);
+  border: 1px solid rgba(139, 190, 151, .25);
+  border-radius: 17px;
+  transition: transform .2s ease, border-color .2s ease;
+}
+
+#conversations-container .feature-card:hover,
+#requests-container .feature-card:hover {
+  transform: translateY(-2px);
+  border-color: #8d54c5;
+}
+
+#conversations-container strong,
+#requests-container strong {
+  color: #fff4e8;
+  font-size: 15px;
+}
+
+#conversations-container .muted,
+#requests-container .muted {
+  color: #c7d3ca;
+}
+
+/* Chat window */
+#messages-container {
+  background: linear-gradient(145deg, #103c28, #082719);
+  border: 1px solid rgba(127, 185, 143, .25);
+  border-radius: 17px;
+  padding: 20px !important;
+  margin: 15px 0;
+  min-height: 300px !important;
+  max-height: 480px !important;
+}
+
+/* Message text */
+#messages-container p {
+  color: #fff8f0;
+  font-size: 14px;
+}
+
+#messages-container small {
+  display: block;
+  margin-top: 7px;
+  font-size: 10px;
+}
+
+/* Message composer */
+#message-form textarea {
+  width: 100%;
+  min-height: 65px;
+  resize: vertical;
+  padding: 16px;
+  border-radius: 15px;
+  border: 1px solid rgba(143, 192, 153, .4);
+  background: #0b3020;
+  color: #fff4e8;
+  font: 14px var(--sans);
+  outline: none;
+}
+
+#message-form textarea::placeholder {
+  color: #b4c6b8;
+}
+
+#message-form textarea:focus {
+  border-color: #9b5bd2;
+  box-shadow: 0 0 0 3px rgba(113, 55, 168, .2);
+}
+
+#message-form button {
+  margin-top: 10px;
+}
+
+/* Clearer logout button on desktop and mobile */
+.topbar #logout-button {
+  color: #f4ebdd;
+  background: linear-gradient(145deg, #123b29, #092318);
+  border: 1px solid rgba(220, 197, 165, .55);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, .2);
+  transition: background .2s ease, border-color .2s ease;
+}
+
+.topbar #logout-button:hover {
+  background: linear-gradient(145deg, #48202b, #27131b);
+  border-color: #d7192d;
+}
+
+/* Mobile messaging layout */
+@media (max-width: 600px) {
+  .profile-page:has(#messages-container) {
+    padding-top: 35px;
+    padding-bottom: 110px;
+  }
+
+  .profile-page:has(#messages-container) > h1 {
+    font-size: 43px;
+  }
+
+  .profile-page:has(#messages-container) > .feature-card {
+    padding: 17px;
+    border-radius: 18px;
+  }
+
+  .profile-page:has(#messages-container) > .feature-card h2 {
+    font-size: 26px;
+  }
+
+  #messages-container {
+    min-height: 260px !important;
+    max-height: 400px !important;
+    padding: 14px !important;
+  }
+
+  #message-form textarea {
+    min-height: 60px;
+    font-size: 14px;
+  }
+
+  #conversations-container .feature-card,
+  #requests-container .feature-card {
+    padding: 14px !important;
+  }
+}
