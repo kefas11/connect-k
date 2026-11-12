@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07130f">
+  <title>Notifications — CONNECT-K</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+  <header class="topbar">
+    <a class="brand" href="/dashboard">
+      <span class="brand-mark">K</span>
+      <span>
+        <b>CONNECT-<i>K</i></b>
+        <small>Made easy.</small>
+      </span>
+    </a>
+
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="/dashboard">Home</a>
+      <a href="/profile">My Profile</a>
+      <a href="/feed">Feed</a>
+      <a href="/discover">Discover</a>
+      <a href="/connections">Connections</a>
+      <a href="/communities">Communities</a>
+      <a href="/messages">Messages</a>
+      <a class="active" href="/notifications">Notifications</a>
+    </nav>
+
+    <button class="btn btn-ghost" id="logout-button" type="button">
+      Log out
+    </button>
+  </header>
+
+  <main class="profile-page wrap notifications-page">
+
+    <p class="eyebrow">STAY IN THE LOOP</p>
+
+    <div class="notifications-heading">
+      <div>
+        <h1>Your <em>notifications.</em></h1>
+        <p class="muted">Important moments and updates from your CONNECT-K community.</p>
+      </div>
+
+      <span id="unread-count" class="notification-count">0 unread</span>
+    </div>
+
+    <section class="feature-card notifications-panel">
+
+      <div class="notifications-toolbar">
+        <h2>Recent activity</h2>
+
+        <button
+          class="btn btn-ghost"
+          id="mark-all-read"
+          type="button"
+        >
+          Mark all as read
+        </button>
+      </div>
+
+      <p
+        id="notification-status"
+        class="form-message"
+        role="status"
+        aria-live="polite"
+      ></p>
+
+      <div id="notifications-list" aria-live="polite">
+        <p class="muted">Loading your notifications...</p>
+      </div>
+
+    </section>
+
+  </main>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+
+    <a class="mobile-nav-item" href="/dashboard">
+      <span class="mobile-nav-icon">⌂</span>
+      <span>Home</span>
+    </a>
+
+    <a class="mobile-nav-item" href="/discover">
+      <span class="mobile-nav-icon">⌕</span>
+      <span>Discover</span>
+    </a>
+
+    <a class="mobile-nav-item" href="/connections">
+      <span class="mobile-nav-icon">♧</span>
+      <span>Connections</span>
+    </a>
+
+    <a class="mobile-nav-item" href="/feed">
+      <span class="mobile-nav-icon">▤</span>
+      <span>Feed</span>
+    </a>
+
+    <a class="mobile-nav-item" href="/messages">
+      <span class="mobile-nav-icon">✉</span>
+      <span>Messages</span>
+    </a>
+
+    <a class="mobile-nav-item active" href="/notifications" aria-current="page">
+      <span class="mobile-nav-icon">♧</span>
+      <span>Alerts</span>
+    </a>
+
+  </nav>
+
+  <script type="module" src="/js/notifications.js"></script>
+
+</body>
+</html>

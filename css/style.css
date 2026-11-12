@@ -603,3 +603,138 @@ a.coming-soon:hover {
     font-size: 12px !important;
   }
 }
+/* CONNECT-K Notifications page */
+
+.notifications-page {
+  padding-bottom: 60px;
+}
+
+.notifications-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
+}
+
+.notification-count {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: linear-gradient(135deg,#C02B43,#86182D);
+  color: #fff8f0;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.notifications-panel {
+  background: linear-gradient(145deg,#123b29,#0a291c);
+  border: 1px solid rgba(119,183,137,.32);
+  border-radius: 22px;
+  padding: 24px;
+}
+
+.notifications-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.notifications-toolbar h2 {
+  color: #f4ebdd;
+  font-family: var(--serif);
+}
+
+#mark-all-read {
+  background: linear-gradient(135deg,#F0C5CE,#DFA3B2);
+  color: #173626;
+  border: 1px solid rgba(255,231,236,.65);
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#mark-all-read:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+#notifications-list button {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+@media(max-width:600px) {
+  .notifications-panel {
+    padding: 15px;
+  }
+
+  .notifications-toolbar {
+    align-items: flex-start;
+  }
+
+  .notifications-heading h1 {
+    font-size: 34px;
+  }
+}
+/* CONNECT-K notification bell */
+
+.nav-links .notification-bell-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #f4ebdd;
+  font-size: 21px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.notification-bell-icon {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.notification-bell-count {
+  position: absolute;
+  top: -3px;
+  right: 0;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: linear-gradient(135deg,#C02B43,#86182D);
+  color: #fff8f0;
+  font-size: 10px;
+  font-weight: 800;
+  border: 2px solid #102b20;
+}
+
+.notification-bell-count[hidden] {
+  display: none;
+}
+
+.mobile-nav .notification-bell-mobile {
+  position: relative;
+  cursor: pointer;
+}
+
+.mobile-nav .notification-bell-mobile .notification-bell-count {
+  top: 0;
+  right: 12px;
+}
+
+@media (max-width: 600px) {
+  .mobile-nav .notification-bell-mobile {
+    min-width: 0;
+    flex: 1;
+  }
+}

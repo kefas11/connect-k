@@ -43,6 +43,10 @@
     {
       "source": "/messages",
       "destination": "/messages.html"
+    },
+    {
+      "source": "/notifications",
+      "destination": "/notifications.html"
     }
   ]
 }
