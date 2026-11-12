@@ -68,7 +68,7 @@ async function loadProfile() {
   } = await supabase.auth.getSession();
 
   if (sessionError || !session) {
-    location.href = "login.html";
+    location.href = "/login";
     return;
   }
 
@@ -91,17 +91,14 @@ async function loadProfile() {
   displayProfile(data);
 }
 
-// Open the profile picture selector.
 avatarButton.addEventListener("click", () => {
   avatarInput.click();
 });
 
-// Open the cover photo selector.
 coverButton.addEventListener("click", () => {
   coverInput.click();
 });
 
-// Save profile changes.
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
@@ -173,7 +170,6 @@ form.addEventListener("submit", async (event) => {
   showMessage("Your profile has been saved successfully.");
 });
 
-// Upload profile picture or cover photo.
 async function uploadImage(file, type) {
   if (!currentUser || !currentProfile) {
     showMessage("Your profile is still loading. Please try again.", true);
@@ -262,7 +258,6 @@ async function uploadImage(file, type) {
   );
 }
 
-// Handle profile picture selection.
 avatarInput.addEventListener("change", async (event) => {
   const file = event.target.files?.[0];
 
@@ -273,7 +268,6 @@ avatarInput.addEventListener("change", async (event) => {
   event.target.value = "";
 });
 
-// Handle cover photo selection.
 coverInput.addEventListener("change", async (event) => {
   const file = event.target.files?.[0];
 
@@ -284,15 +278,13 @@ coverInput.addEventListener("change", async (event) => {
   event.target.value = "";
 });
 
-// Log out.
 $("#logout-button").addEventListener("click", async () => {
   await supabase.auth.signOut();
-  location.href = "index.html";
+  location.href = "/";
 });
 
-// Initialize the profile page.
 if (!isSupabaseConfigured || !supabase) {
-  location.href = "login.html";
+  location.href = "/login";
 } else {
   await loadProfile();
 }

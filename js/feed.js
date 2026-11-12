@@ -219,7 +219,6 @@ function createPostElement(post, profile, likeInfo) {
     }
   }
 
-  // Like section
   const likeSection = document.createElement("div");
   likeSection.style.cssText =
     "display:flex;align-items:center;gap:12px;" +
@@ -228,7 +227,7 @@ function createPostElement(post, profile, likeInfo) {
 
   const likeButton = document.createElement("button");
   likeButton.type = "button";
-  likeButton.textContent = likeInfo.isLiked ? "♥ Liked" : "♡ Like";
+  likeButton.textContent = likeInfo.isLiked ? "♥️ Liked" : "♡ Like";
   likeButton.setAttribute("aria-pressed", String(likeInfo.isLiked));
 
   likeButton.style.cssText =
@@ -318,7 +317,6 @@ async function loadPosts() {
   );
 
   const likes = likeResult.data || [];
-
   const likeMap = new Map();
 
   likes.forEach(like => {
@@ -355,7 +353,7 @@ async function initializeFeed() {
     await supabase.auth.getSession();
 
   if (error || !session) {
-    location.href = "login.html";
+    location.href = "/login";
     return;
   }
 
@@ -368,7 +366,7 @@ form.addEventListener("submit", publishPost);
 
 $("#logout-button").addEventListener("click", async () => {
   await supabase.auth.signOut();
-  location.href = "index.html";
+  location.href = "/";
 });
 
 initializeFeed();

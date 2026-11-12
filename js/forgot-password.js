@@ -31,7 +31,7 @@ form.addEventListener("submit", async (e) => {
   btn.textContent = "Sending...";
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: "https://connect-k-bay.vercel.app/reset-password.html"
+    redirectTo: "https://connect-k-bay.vercel.app/reset-password"
   });
 
   btn.disabled = false;

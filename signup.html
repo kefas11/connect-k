@@ -1,1 +1,110 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Create account — Connect-K</title><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/style.css"></head><body class="auth-page"><a class="brand auth-brand" href="index.html"><span class="brand-mark">K</span><span><b>CONNECT-<i>K</i></b><small>Made easy.</small></span></a><main class="auth-shell"><section class="auth-aside"><p class="eyebrow">YOUR NEXT CONNECTION STARTS HERE</p><h1>Find your<br><em>kind of people.</em></h1><p>Create your space. Meet people. Make it meaningful.</p></section><section class="auth-card"><a class="back-link" href="index.html">← Back to home</a><p class="eyebrow">JOIN THE COMMUNITY</p><h2>Create account</h2><p class="muted">Sign up with your email address. Your email stays private.</p><form id="signup-form"><label for="name">Display name</label><input id="name" type="text" maxlength="60" placeholder="How should people know you?" required><label for="username">Username</label><input id="username" type="text" minlength="3" maxlength="24" pattern="[A-Za-z0-9_]+" placeholder="e.g. amara_k" required><label for="email">Email address (private)</label><input id="email" type="email" autocomplete="email" placeholder="you@example.com" required><label for="password">Create password</label><input id="password" type="password" minlength="8" placeholder="At least 8 characters" required><label for="confirm-password">Confirm password</label><input id="confirm-password" type="password" minlength="8" placeholder="Enter password again" required><button class="btn btn-red btn-full" type="submit">Create my account</button><p class="form-message" id="form-message" role="status"></p></form><p class="auth-switch">Already have an account? <a href="login.html">Log in</a></p></section></main><script type="module" src="js/signup.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Create account — Connect-K</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="auth-page">
+
+  <a class="brand auth-brand" href="/">
+    <span class="brand-mark">K</span>
+    <span>
+      <b>CONNECT-<i>K</i></b>
+      <small>Made easy.</small>
+    </span>
+  </a>
+
+  <main class="auth-shell">
+
+    <section class="auth-aside">
+      <p class="eyebrow">YOUR NEXT CONNECTION STARTS HERE</p>
+      <h1>Find your<br><em>kind of people.</em></h1>
+      <p>Create your space. Meet people. Make it meaningful.</p>
+    </section>
+
+    <section class="auth-card">
+
+      <a class="back-link" href="/">← Back to home</a>
+
+      <p class="eyebrow">JOIN THE COMMUNITY</p>
+      <h2>Create account</h2>
+      <p class="muted">
+        Sign up with your email address. Your email stays private.
+      </p>
+
+      <form id="signup-form">
+
+        <label for="name">Display name</label>
+        <input
+          id="name"
+          type="text"
+          maxlength="60"
+          placeholder="How should people know you?"
+          required
+        >
+
+        <label for="username">Username</label>
+        <input
+          id="username"
+          type="text"
+          minlength="3"
+          maxlength="24"
+          pattern="[A-Za-z0-9_]+"
+          placeholder="e.g. amara_k"
+          required
+        >
+
+        <label for="email">Email address (private)</label>
+        <input
+          id="email"
+          type="email"
+          autocomplete="email"
+          placeholder="you@example.com"
+          required
+        >
+
+        <label for="password">Create password</label>
+        <input
+          id="password"
+          type="password"
+          minlength="8"
+          placeholder="At least 8 characters"
+          required
+        >
+
+        <label for="confirm-password">Confirm password</label>
+        <input
+          id="confirm-password"
+          type="password"
+          minlength="8"
+          placeholder="Enter password again"
+          required
+        >
+
+        <button class="btn btn-red btn-full" type="submit">
+          Create my account
+        </button>
+
+        <p class="form-message" id="form-message" role="status"></p>
+
+      </form>
+
+      <p class="auth-switch">
+        Already have an account?
+        <a href="/login">Log in</a>
+      </p>
+
+    </section>
+
+  </main>
+
+  <script type="module" src="js/signup.js"></script>
+
+</body>
+</html>
